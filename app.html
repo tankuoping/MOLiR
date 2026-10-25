@@ -1,0 +1,260 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Build my MOLiR · Moments of Life in Review</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌳</text></svg>">
+<style>
+.page-head{padding:30px 0 10px}
+.page-head h1{font-size:clamp(1.9rem,4vw,2.6rem);font-weight:800}
+.page-head h1 span{color:var(--orange)}
+.page-head p{color:var(--muted);margin:0}
+.toolbar{display:flex;flex-wrap:wrap;gap:8px;margin:18px 0 6px}
+.saved{font-size:.85rem;color:var(--muted);align-self:center;margin-left:auto}
+
+.card{background:#fff;border-radius:var(--radius);box-shadow:var(--shadow);padding:22px}
+.card h2{font-size:1.35rem;display:flex;align-items:center;gap:10px}
+.card h2 .n{width:32px;height:32px;border-radius:10px;display:grid;place-items:center;color:#fff;font-size:1rem;flex:none}
+
+.about{display:grid;grid-template-columns:1.2fr 1.4fr .8fr;gap:14px;margin-top:14px}
+label.f{display:block;font-weight:800;font-size:.86rem;margin-bottom:6px;color:#4A4757}
+label.f small{font-weight:600;color:var(--muted)}
+input[type=text],input[type=date],textarea{width:100%;font:inherit;border:2px solid var(--line);border-radius:14px;padding:11px 14px;background:#FFFEFC;color:var(--ink);transition:border-color .15s}
+input:focus,textarea:focus{outline:none;border-color:var(--blue)}
+textarea{resize:vertical;min-height:80px}
+
+.layout{display:grid;grid-template-columns:390px 1fr;gap:22px;margin-top:22px;align-items:start}
+.form-col{position:sticky;top:78px}
+.fld{margin-bottom:16px}
+
+.seg{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
+.seg button{font:inherit;font-weight:800;font-size:.86rem;border:2px solid var(--line);background:#fff;border-radius:14px;padding:10px 6px;cursor:pointer;line-height:1.2;color:var(--ink)}
+.seg button small{display:block;font-weight:600;color:var(--muted);font-size:.74rem;margin-top:2px}
+.seg button.on{border-color:var(--c);background:var(--cs)}
+
+.hint{background:var(--yellow-soft);border-radius:14px;padding:10px 14px;font-size:.86rem;margin-top:8px}
+.hint b{display:block;margin-bottom:2px}
+.hint ul{margin:0;padding-left:18px}
+
+.energy-pick{display:flex;flex-direction:column;gap:5px}
+.energy-pick button{display:flex;align-items:center;gap:10px;font:inherit;font-weight:800;font-size:.92rem;border:2px solid var(--line);background:#fff;border-radius:12px;padding:7px 12px;cursor:pointer;color:var(--ink);text-align:left}
+.energy-pick button .dot{width:14px;height:14px;border-radius:50%;flex:none}
+.energy-pick button .vv{margin-left:auto;color:var(--muted);font-size:.8rem}
+.energy-pick button.on{color:#fff;border-color:transparent}
+.energy-pick button.on .vv{color:#fff;opacity:.85}
+.energy-pick button.on .dot{background:#fff!important}
+
+.form-actions{display:flex;gap:8px;flex-wrap:wrap}
+.err{color:#C73A3F;font-weight:700;font-size:.86rem;margin-top:8px;display:none}
+
+.chart-card{padding:14px}
+.chart-scroll{overflow-x:auto}
+.chart-scroll svg{min-width:720px;display:block}
+
+.chapter-block{margin-top:18px}
+.chapter-block h3{font-size:1.1rem;display:flex;align-items:center;gap:8px;margin-bottom:8px}
+.chapter-block h3 .sw{width:14px;height:14px;border-radius:50%}
+.empty{color:var(--muted);font-size:.92rem;padding:8px 0 4px}
+.mom{display:grid;grid-template-columns:34px 1fr auto;gap:12px;align-items:start;padding:12px;border:2px solid var(--line);border-radius:16px;margin-bottom:8px;background:#fff}
+.mom.editing{border-color:var(--orange);background:var(--orange-soft)}
+.mom .badge{width:32px;height:32px;border-radius:50%;display:grid;place-items:center;color:#fff;font-weight:800;font-size:.85rem}
+.mom .t{font-weight:800}
+.mom .meta{font-size:.82rem;color:var(--muted);font-weight:700}
+.mom .rm{font-size:.9rem;margin-top:4px;white-space:pre-wrap}
+.mom .acts{display:flex;gap:4px}
+.ib{border:0;background:var(--bg);border-radius:10px;width:32px;height:32px;cursor:pointer;font-size:.9rem}
+.ib:hover{background:var(--orange-soft)}
+
+.insights{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:14px 0 6px}
+.ins{border-radius:16px;padding:14px 16px}
+.ins h4{font-size:1rem;margin-bottom:6px}
+.ins ul{margin:0;padding-left:18px;font-size:.9rem}
+.ins .bar{display:flex;align-items:center;gap:8px;font-size:.86rem;font-weight:700;margin:5px 0}
+.ins .bar i{display:block;height:10px;border-radius:6px}
+.refl-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:12px}
+.refl-grid .full{grid-column:1/-1}
+.sub{font-family:"Baloo 2";font-weight:800;font-size:1.1rem;margin:20px 0 0}
+
+.print-only{display:none}
+.privacy{font-size:.84rem;color:var(--muted);margin-top:10px}
+
+@media (max-width:980px){
+  .layout{grid-template-columns:1fr}
+  .form-col{position:static}
+  .about{grid-template-columns:1fr 1fr}
+  .about .f-date{grid-column:1/-1}
+  .insights{grid-template-columns:1fr}
+}
+@media (max-width:560px){
+  .about,.refl-grid{grid-template-columns:1fr}
+  .saved{width:100%;margin-left:0}
+}
+
+/* ---------- PRINT / PDF ---------- */
+@media print{
+  @page{size:A4 landscape;margin:12mm}
+  body{background:#fff;font-size:11pt}
+  .no-print,.nav,footer.site{display:none!important}
+  .print-only{display:block!important}
+  .wrap{max-width:none;padding:0}
+  .card{box-shadow:none;padding:0;border-radius:0}
+  .chart-scroll{overflow:visible}
+  .chart-scroll svg{min-width:0;width:100%}
+  .ph{display:flex!important;align-items:center;gap:16px;border-bottom:3px solid var(--orange);padding-bottom:8px;margin-bottom:10px}
+  .ph img{height:40px}
+  .ph h1{font-size:20pt;margin:0}
+  .ph .who{margin-left:auto;text-align:right;font-size:10pt;color:#444}
+  .ptable{width:100%;border-collapse:collapse;font-size:9.5pt;margin-top:6px}
+  .ptable th,.ptable td{border:1px solid #ddd;padding:5px 7px;text-align:left;vertical-align:top}
+  .ptable th{background:#f6f3fb}
+  .layout{display:none!important}
+  .chart-card{break-after:page}
+  .prefl{display:grid!important;grid-template-columns:1fr 1fr;gap:8px 18px;font-size:10pt}
+  .prefl div{break-inside:avoid}
+  .prefl h4{font-size:11pt;margin:6px 0 2px;color:#8A6BC1}
+  .prefl p{margin:0;white-space:pre-wrap}
+  .pins{font-size:10pt;margin:6px 0}
+  * {-webkit-print-color-adjust:exact;print-color-adjust:exact}
+}
+</style>
+</head>
+<body>
+
+<nav class="nav"><div class="nav-inner">
+  <a class="brand" href="index.html">
+    <img class="logo" src="assets/kidstart-logo.png" alt="KidSTART Singapore">
+    <span class="wordmark"><b>Kid</b><b>START</b></span>
+    <span class="divider"></span><span class="app-name">MOLiR</span>
+  </a>
+  <div class="nav-links">
+    <a href="index.html">Learn</a>
+    <a href="app.html" class="active">Build my MOLiR</a>
+  </div>
+</div></nav>
+
+<main class="wrap">
+
+  <!-- print header -->
+  <div class="ph print-only" style="display:none">
+    <img src="assets/kidstart-logo.png" alt="" onerror="this.style.display='none'">
+    <h1>Moments of Life in Review</h1>
+    <div class="who"><b id="pName"></b><br><span id="pTitle"></span><br><span id="pDate"></span></div>
+  </div>
+
+  <div class="page-head no-print">
+    <h1>Build my <span>MOLiR</span></h1>
+    <p>Add the moments that shaped you, place each in its life chapter, and rate how it felt. Then look for the patterns.</p>
+    <div class="toolbar">
+      <button class="btn btn-primary btn-sm" id="bPrint">🖨️ Print / Save as PDF</button>
+      <button class="btn btn-blue btn-sm" id="bPng">🖼️ Download chart (PNG)</button>
+      <button class="btn btn-ghost btn-sm" id="bSave">💾 Save file</button>
+      <button class="btn btn-ghost btn-sm" id="bOpen">📂 Open file</button>
+      <button class="btn btn-ghost btn-sm" id="bSample">✨ Load example</button>
+      <button class="btn btn-danger btn-sm" id="bClear">🗑️ Start over</button>
+      <input type="file" id="fileIn" accept=".json,application/json" hidden>
+      <span class="saved" id="saved"></span>
+    </div>
+  </div>
+
+  <div class="card no-print">
+    <h2><span class="n" style="background:var(--purple)">0</span>About this review</h2>
+    <div class="about">
+      <div><label class="f" for="name">Your name</label><input type="text" id="name" placeholder="e.g. Kuo Ping" maxlength="80"></div>
+      <div><label class="f" for="rtitle">Title <small>(optional)</small></label><input type="text" id="rtitle" placeholder="e.g. My journey so far" maxlength="120"></div>
+      <div class="f-date"><label class="f" for="rdate">Date</label><input type="date" id="rdate"></div>
+    </div>
+  </div>
+
+  <div class="card chart-card" style="margin-top:22px">
+    <div class="chart-scroll" id="chart"></div>
+  </div>
+
+  <div class="layout">
+    <!-- FORM -->
+    <aside class="form-col no-print">
+      <div class="card">
+        <h2><span class="n" style="background:var(--orange)">1</span><span id="formTitle">Add a moment</span></h2>
+        <div class="fld">
+          <label class="f" for="mTitle">What happened?</label>
+          <input type="text" id="mTitle" placeholder="e.g. Started my first job" maxlength="90">
+        </div>
+        <div class="fld">
+          <label class="f">Which life chapter?</label>
+          <div class="seg" id="seg"></div>
+          <div class="hint" id="hint"></div>
+        </div>
+        <div class="fld">
+          <label class="f" for="mWhen">When <small>(optional: year or age; sorts within the chapter)</small></label>
+          <input type="text" id="mWhen" placeholder="e.g. 2012 or age 25" maxlength="30">
+        </div>
+        <div class="fld">
+          <label class="f">How did it feel? Energy level</label>
+          <div class="energy-pick" id="epick"></div>
+        </div>
+        <div class="fld">
+          <label class="f" for="mRem">Remarks <small>(why high or low? what did you learn?)</small></label>
+          <textarea id="mRem" placeholder="e.g. Felt trusted with real responsibility for the first time" maxlength="600"></textarea>
+        </div>
+        <div class="form-actions">
+          <button class="btn btn-green" id="bAdd">＋ Add moment</button>
+          <button class="btn btn-ghost" id="bCancel" style="display:none">Cancel</button>
+        </div>
+        <div class="err" id="err"></div>
+      </div>
+    </aside>
+
+    <!-- CHART + LIST -->
+    <section>
+      <div class="card no-print">
+        <h2><span class="n" style="background:var(--green)">2</span>My moments</h2>
+        <div id="list"></div>
+      </div>
+    </section>
+  </div>
+
+  <!-- PRINT: moments table -->
+  <div class="print-only">
+    <table class="ptable"><thead><tr><th>#</th><th>Moment</th><th>Chapter</th><th>When</th><th>Energy</th><th>Remarks</th></tr></thead><tbody id="pRows"></tbody></table>
+  </div>
+
+  <!-- REFLECTIONS -->
+  <div class="card no-print" style="margin-top:22px">
+    <h2><span class="n" style="background:var(--blue)">3</span>Discover patterns</h2>
+    <p style="color:var(--muted);margin:0">A quick read of your chart, followed by space for your own reflections.</p>
+    <div class="insights" id="insights"></div>
+    <div class="refl-grid">
+      <div><label class="f" for="r_themes">Recurring themes</label><textarea id="r_themes" data-r="themes" placeholder="What keeps showing up across chapters?"></textarea></div>
+      <div><label class="f" for="r_strengths">Strengths I relied on</label><textarea id="r_strengths" data-r="strengths" placeholder="Skills and achievements I can transfer"></textarea></div>
+      <div><label class="f" for="r_values">Values that guided me</label><textarea id="r_values" data-r="values" placeholder="What did I hold on to in the highs and lows?"></textarea></div>
+      <div><label class="f" for="r_fulfil">What energises me / what drains me</label><textarea id="r_fulfil" data-r="fulfil" placeholder="Sources of fulfilment vs depletion"></textarea></div>
+    </div>
+    <div class="sub">🔭 Reflect possibilities</div>
+    <div class="refl-grid">
+      <div><label class="f" for="r_more">I want more of…</label><textarea id="r_more" data-r="more"></textarea></div>
+      <div><label class="f" for="r_poss">Possibilities for my next chapter</label><textarea id="r_poss" data-r="poss"></textarea></div>
+      <div><label class="f" for="r_next">One small next step</label><textarea id="r_next" data-r="next" style="min-height:60px"></textarea></div>
+      <div><label class="f" for="r_notes">Other remarks</label><textarea id="r_notes" data-r="notes" style="min-height:60px"></textarea></div>
+    </div>
+    <p class="privacy">🔒 Everything stays in this browser. Use <b>Save file</b> to keep a copy or move to another device.</p>
+  </div>
+
+  <!-- PRINT: reflections -->
+  <div class="print-only" style="margin-top:10px">
+    <div class="pins" id="pIns"></div>
+    <div class="prefl" id="pRefl" style="display:none"></div>
+  </div>
+</main>
+
+<footer class="site">
+  <p>MOLiR framework © Singapore Polytechnic, User Experience Centre. Built for KidSTART Singapore.</p>
+</footer>
+
+<script src="assets/brand.js"></script>
+<script src="assets/chart.js"></script>
+<script src="assets/app.js"></script>
+</body>
+</html>
